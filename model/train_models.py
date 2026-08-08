@@ -12,6 +12,7 @@ Outputs:
 import os
 import pandas as pd
 import joblib
+import matplotlib.pyplot as plt
 
 from sklearn.datasets import load_breast_cancer
 from sklearn.model_selection import train_test_split
@@ -93,6 +94,19 @@ def train():
     results_csv = os.path.join(MODEL_DIR, "results.csv")
     results_df.to_csv(results_csv)
     print(f"\n[✓] results.csv saved → {results_csv}")
+
+    chart_path = os.path.join(MODEL_DIR, "comparison_chart.png")
+    fig, ax = plt.subplots(figsize=(10, 5))
+    results_df[["Accuracy", "F1 Score", "AUC Score"]].plot(kind="bar", ax=ax, width=0.8)
+    ax.set_title("Model Performance Comparison")
+    ax.set_ylabel("Score")
+    ax.set_xlabel("Model")
+    ax.set_ylim(0, 1.05)
+    ax.grid(axis="y", linestyle="--", alpha=0.5)
+    plt.tight_layout()
+    fig.savefig(chart_path, dpi=150, bbox_inches="tight")
+    plt.close(fig)
+    print(f"[✓] comparison chart saved → {chart_path}")
 
     # ── Save test_data.csv ───────────────────────────────────────────────────
     test_df = X_test.copy()
