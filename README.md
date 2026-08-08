@@ -21,9 +21,6 @@ This dataset contains measurements of cell nuclei characteristics and is widely 
 
 ---
 
-## Streamlit App Link
-https://ml-classification-assignment-fthkfv8chrrsvhyvnvsski.streamlit.app/
-
 ## c. GitHub Repository Link
 https://github.com/bala1123/ML-Classification-Assignment
 
@@ -56,4 +53,6 @@ Logistic Regression performed best overall on this dataset based on the evaluati
 
 ---
 
+## Streamlit App Link
+https://ml-classification-assignment-fthkfv8chrrsvhyvnvsski.streamlit.app/
 
