@@ -114,6 +114,6 @@ streamlit run app.py
 
 | | |
 |---|---|
-| **GitHub Repository** | _add link after pushing_ |
-| **Live Streamlit App** | _add link after deploying to Streamlit Community Cloud_ |
+| **GitHub Repository** | https://github.com/bala1123/ML-Classification-Assignment |
+| **Live Streamlit App** | https://ml-classification-assignment-fthkfv8chrrsvhyvnvsski.streamlit.app |
 
