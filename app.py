@@ -109,6 +109,17 @@ def plot_metrics_bar(metrics_df: pd.DataFrame):
     return fig
 
 
+def compute_metrics(y_true, y_pred, y_prob):
+    return {
+        "Accuracy": round(accuracy_score(y_true, y_pred), 4),
+        "AUC Score": round(roc_auc_score(y_true, y_prob), 4),
+        "Precision": round(precision_score(y_true, y_pred, zero_division=0), 4),
+        "Recall": round(recall_score(y_true, y_pred, zero_division=0), 4),
+        "F1 Score": round(f1_score(y_true, y_pred, zero_division=0), 4),
+        "MCC Score": round(matthews_corrcoef(y_true, y_pred), 4),
+    }
+
+
 # ─── Main ─────────────────────────────────────────────────────────────────────
 def main():
     st.title("🤖 ML Classification Dashboard")
@@ -200,15 +211,24 @@ def main():
 
             if has_target:
                 st.divider()
+                st.subheader("Model Comparison on Uploaded Test Data")
+                model_metrics = {}
+                for name, model in trained_models.items():
+                    y_pred_all = model.predict(X_scaled)
+                    y_prob_all = model.predict_proba(X_scaled)[:, 1]
+                    model_metrics[name] = compute_metrics(y_true, y_pred_all, y_prob_all)
+
+                uploaded_metrics_df = pd.DataFrame(model_metrics).T
+                styled_uploaded = uploaded_metrics_df.style.highlight_max(axis=0, color="#90EE90").format("{:.4f}")
+                st.dataframe(styled_uploaded, use_container_width=True)
+
+                winner_uploaded = uploaded_metrics_df["F1 Score"].idxmax()
+                st.success(
+                    f"🏆 Best model on uploaded test data: **{winner_uploaded}**"
+                )
+
                 c1, c2, c3 = st.columns(3)
-                live_metrics = {
-                    "Accuracy":  accuracy_score(y_true, y_pred),
-                    "AUC Score": roc_auc_score(y_true, y_prob),
-                    "Precision": precision_score(y_true, y_pred, zero_division=0),
-                    "Recall":    recall_score(y_true, y_pred, zero_division=0),
-                    "F1 Score":  f1_score(y_true, y_pred, zero_division=0),
-                    "MCC Score": matthews_corrcoef(y_true, y_pred),
-                }
+                live_metrics = compute_metrics(y_true, y_pred, y_prob)
                 items = list(live_metrics.items())
                 for col, chunk in zip([c1, c2, c3], [items[:2], items[2:4], items[4:]]):
                     with col:
