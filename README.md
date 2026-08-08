@@ -1,119 +1,59 @@
-# ML-Classification-Assignment
+# ML Classification Assignment
 
-## Problem Statement
-Build and compare five machine-learning classification models on a real-world medical dataset to predict whether a tumour is **malignant or benign**, and deploy an interactive demo application on Streamlit Community Cloud.
+## a. Problem Statement
+Build and compare multiple machine learning classification models on the Breast Cancer Wisconsin (Diagnostic) dataset to predict whether a tumour is malignant or benign. The project also includes an interactive Streamlit web application for model comparison and prediction using uploaded test data.
 
 ---
 
-## Dataset Description
+## b. Dataset Description
 
 | Property | Detail |
 |---|---|
-| **Name** | Breast Cancer Wisconsin (Diagnostic) |
-| **Source** | UCI Machine Learning Repository |
-| **URL** | https://archive.ics.uci.edu/ml/datasets/Breast+Cancer+Wisconsin+(Diagnostic) |
-| **Task** | Binary Classification |
-| **Features** | 30 numeric features (mean, SE, worst of 10 cell-nucleus measurements) |
-| **Instances** | 569 |
-| **Classes** | 0 = Malignant (212), 1 = Benign (357) |
-| **Missing values** | None |
+| Name | Breast Cancer Wisconsin (Diagnostic) Dataset |
+| Source | UCI Machine Learning Repository |
+| Task | Binary Classification |
+| Features | 30 numeric features |
+| Instances | 569 |
+| Classes | 0 = Malignant, 1 = Benign |
+| Missing Values | None |
 
-### Feature Groups
-| Group | Features (×3 stats each: mean, SE, worst) |
+This dataset contains measurements of cell nuclei characteristics and is widely used for binary classification tasks in medical diagnosis.
+
+---
+
+## Streamlit App Link
+https://ml-classification-assignment-fthkfv8chrrsvhyvnvsski.streamlit.app/
+
+## c. GitHub Repository Link
+https://github.com/bala1123/ML-Classification-Assignment
+
+---
+
+## d. Models Used and Evaluation Metrics
+
+The following models were trained and evaluated on the same test data:
+
+| ML Model Name | Accuracy | AUC | Precision | Recall | F1 | MCC |
+|---|---:|---:|---:|---:|---:|---:|
+| Logistic Regression | 0.9825 | 0.9954 | 0.9861 | 0.9861 | 0.9861 | 0.9623 |
+| Decision Tree | 0.9123 | 0.9157 | 0.9559 | 0.9028 | 0.9286 | 0.8174 |
+| KNN | 0.9561 | 0.9788 | 0.9589 | 0.9722 | 0.9655 | 0.9054 |
+| Naive Bayes | 0.9298 | 0.9868 | 0.9444 | 0.9444 | 0.9444 | 0.8492 |
+| Random Forest | 0.9561 | 0.9939 | 0.9589 | 0.9722 | 0.9655 | 0.9054 |
+
+### Observations on Model Performance
+
+| ML Model Name | Observation about model performance |
 |---|---|
-| Radius, Texture, Perimeter, Area | Size & shape descriptors |
-| Smoothness, Compactness, Concavity | Surface regularity |
-| Concave points, Symmetry, Fractal dimension | Boundary complexity |
+| Logistic Regression | Achieved the best overall performance with very high accuracy, AUC, precision, recall, F1, and MCC. |
+| Decision Tree | Performed reasonably well but showed weaker generalisation compared with the stronger models. |
+| KNN | Performed well and produced competitive results, though slightly lower than Logistic Regression. |
+| Naive Bayes | Achieved good performance, especially in AUC, but was less balanced than Logistic Regression. |
+| Random Forest | Delivered very strong and balanced results, making it one of the top-performing models. |
+
+### Overall Winner
+Logistic Regression performed best overall on this dataset based on the evaluation metrics.
 
 ---
 
-## Model Evaluation Comparison Table
-
-> Results on a **20% stratified hold-out test set** (random_state = 42).  
-> Green = best per metric.
-
-| Model | Accuracy | AUC Score | Precision | Recall | F1 Score | MCC Score |
-|---|---|---|---|---|---|---|
-| Logistic Regression | — | — | — | — | — | — |
-| Decision Tree | — | — | — | — | — | — |
-| KNN | — | — | — | — | — | — |
-| Naive Bayes | — | — | — | — | — | — |
-| **Random Forest** | — | — | — | — | — | — |
-
-> **Note:** Run `model/ml_classification.ipynb` or `model/train_models.py` to populate the table with actual values.
-
----
-
-## Repository Structure
-
-```
-ML-Assignment-2/
-├── app.py                         # Streamlit web application
-├── requirements.txt               # Python dependencies
-├── test_data.csv                  # Sample test data (20% hold-out)
-├── README.md
-└── model/
-    ├── ml_classification.ipynb    # Full notebook (training + EDA + evaluation)
-    ├── train_models.py            # Standalone training script
-    ├── results.csv                # Metric comparison table (generated)
-    ├── comparison_chart.png       # Bar chart (generated)
-    ├── scaler.pkl                 # Fitted StandardScaler
-    ├── logistic_regression.pkl
-    ├── decision_tree.pkl
-    ├── knn.pkl
-    ├── naive_bayes.pkl
-    └── random_forest.pkl
-```
-
----
-
-## Setup & Running Locally
-
-```bash
-# 1. Clone the repository
-git clone <your-repo-url>
-cd ML-Assignment-2
-
-# 2. Install dependencies
-pip install -r requirements.txt
-
-# 3. Train models & generate test_data.csv
-python model/train_models.py
-
-# 4. Launch the Streamlit app
-streamlit run app.py
-```
-
----
-
-## Streamlit App Features
-
-- **Tab 1 — Model Overview:** Metrics comparison table (highlighted), grouped bar chart, confusion matrix viewer, classification report
-- **Tab 2 — Custom Test Data:** Upload any CSV with the same 30 features; select a model; view predictions, metrics, and confusion matrix
-
----
-
-## Observations
-
-1. **Random Forest** achieves the highest F1 and AUC scores, benefiting from ensemble variance reduction.
-2. **Logistic Regression** performs comparably because the dataset is approximately linearly separable in scaled space.
-3. **Decision Tree** shows slightly lower AUC — its single-tree structure is prone to overfitting.
-4. **Naive Bayes** performs well despite the feature-independence assumption — low collinearity after scaling helps.
-5. **KNN (k=5)** is competitive but more sensitive to the neighbourhood size and scaling.
-6. All 5 models achieve **>90% accuracy**, confirming the dataset is well-structured and learnable.
-
----
-
-## Overall Winner Model
-
-**Random Forest** — highest F1 Score and AUC Score, robust generalisation via ensemble averaging, and provides built-in feature importance.
-
----
-
-## Links
-
-| | |
-|---|---|
-| **GitHub Repository** | https://github.com/bala1123/ML-Classification-Assignment |
-| **Live Streamlit App** | https://ml-classification-assignment-fthkfv8chrrsvhyvnvsski.streamlit.app |
 
